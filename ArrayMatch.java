@@ -14,12 +14,12 @@ import java.util.*;
 
 public class ArrayMatch {
     static private class PairArray {
-        int[] arr_1;
-        int[] arr_2;
+        int[] arr1;
+        int[] arr2;
 
-        PairArray(int[] arr_1, int[] arr_2) {
-            this.arr_1 = arr_1;
-            this.arr_2 = arr_2;
+        PairArray(int[] arr1, int[] arr2) {
+            this.arr1 = arr1;
+            this.arr2 = arr2;
         }
     }
 
@@ -35,35 +35,26 @@ public class ArrayMatch {
         }
 
         // split arrays: 2n
-        PairArray a_split = split(a);
-        int[] a_1 = a_split.arr_1;
-        int[] a_2 = a_split.arr_2;
+        PairArray aSplit = split(a);
+        int[] a1 = aSplit.arr1;
+        int[] a2 = aSplit.arr2;
 
-        PairArray b_split = split(b);
-        int[] b_1 = b_split.arr_1;
-        int[] b_2 = b_split.arr_2;
+        PairArray bSplit = split(b);
+        int[] b1 = bSplit.arr1;
+        int[] b2 = bSplit.arr2;
 
-        // get pairs, recursion step: 4T(n/2)
-        boolean a1_b1 = match(a_1, b_1);
-        boolean a2_b2 = match(a_2, b_2);
-        boolean a1_b2 = match(a_1, b_2);
-        boolean a2_b1 = match(a_2, b_1);
-
-        // match checking: 3 - const ignore
-        boolean[] results = {
-            two_match(a1_b1, a2_b2),
-            two_match(a1_b1, a1_b2),
-            two_match(a2_b1, a2_b2)
-        };
-
-        for (boolean s : results) {
-            if (s) return true;
+        // get pairs, recursion step: 3T(n/2)
+        boolean a1_b1 = match(a1, b1);
+        if (!a1_b1) {
+            boolean a2_b1 = match(a2, b1);
+            boolean a2_b2 = match(a2, b2);
+            return a2_b1 == true && a2_b2 == true;
         }
 
-        return false;
+        return match(a2, b2) || match(a1, b2);
     }
 
-    static private boolean two_match(boolean cond_1, boolean cond_2) {
+    static private boolean twoMatch(boolean cond_1, boolean cond_2) {
         if (!cond_1 || !cond_2) return false;
         return true;
     }
