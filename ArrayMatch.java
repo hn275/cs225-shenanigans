@@ -1,11 +1,19 @@
 /* 
  * CSC 225 - Assignment 3
- * Name: 
- * Student number:
+ * Name: Hal Nguyen
+ * Student number: V00972322
  */
 
 /* 
 Algorithm analysis goes here.
+
+T(n) = 1 if n = 1
+T(n) = n if n & 2 != 0
+T(n) = 3T(n/2) + cn otherwise
+
+... math stuff
+
+T(n) is O(3^(logn)) <= O(n^2)
 */
 
 
@@ -45,26 +53,27 @@ public class ArrayMatch {
 
         // get pairs, recursion step: 3T(n/2)
         boolean a1_b1 = match(a1, b1); // T(n/2)
-        if (!a1_b1) {
+        if (!match(a1, b1)) {
             boolean a2_b1 = match(a2, b1); // T(n/2)
             boolean a2_b2 = match(a2, b2); // T(n/2)
             return a2_b1 == true && a2_b2 == true;
         }
 
-        return match(a2, b2) || match(a1, b2);
+        if (match(a2, b2)) return true;
+        return match(a1, b2);
     }
 
     static private PairArray split(int[] a) {
         int s = a.length / 2;
-        int[] a_1 = new int[s];
-        int[] a_2 = new int[s];
+        int[] arr1 = new int[s];
+        int[] arr2 = new int[s];
 
         for (int i = 0; i < s; i++) {
-            a_1[i] = a[i];
-            a_2[i] = a[i + s];
+            arr1[i] = a[i];
+            arr2[i] = a[i + s];
         }
 
-        return new PairArray(a_1, a_2);
+        return new PairArray(arr1, arr2);
     }
 
 
@@ -83,15 +92,15 @@ public class ArrayMatch {
         */
 
         Scanner s;
-    if (args.length > 0){
-            try{
+        if (args.length > 0){
+            try {
                 s = new Scanner(new File(args[0]));
             } catch(java.io.FileNotFoundException e){
                 System.out.printf("Unable to open %s\n",args[0]);
                 return;
             }
             System.out.printf("Reading input values from %s.\n",args[0]);
-        }else{
+        } else {
             s = new Scanner(System.in);
             System.out.printf("Reading input values from stdin.\n");
         }     
@@ -100,11 +109,11 @@ public class ArrayMatch {
         int[] a = new int[n];
         int[] b = new int[n];
 
-        for(int j = 0; j < n; j++){
+        for (int j = 0; j < n; j++) {
             a[j] = s.nextInt();
         }
 
-        for(int j = 0; j < n; j++){
+        for (int j = 0; j < n; j++) {
             b[j] = s.nextInt();
         }
 
