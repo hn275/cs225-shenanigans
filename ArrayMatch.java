@@ -52,11 +52,17 @@ public class ArrayMatch {
         int[] b2 = bSplit.arr2;
 
         // get pairs, recursion step: 3T(n/2)
-        boolean a1_b1 = match(a1, b1); // T(n/2)
         if (!match(a1, b1)) {
+            /*
             boolean a2_b1 = match(a2, b1); // T(n/2)
             boolean a2_b2 = match(a2, b2); // T(n/2)
-            return a2_b1 == true && a2_b2 == true;
+             */
+            
+
+            // return a2_b1 == true && a2_b2 == true;
+
+            if (match(a2, b1)) return match(a2, b2);
+            return false;
         }
 
         if (match(a2, b2)) return true;

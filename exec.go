@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/fs"
 	"log"
 	"os"
@@ -34,11 +35,6 @@ func main() {
 		return nil
 	})
 
-	inputResult := []string{}
-	for _, v := range inputPaths {
-		inputResult = append(inputResult, run(v))
-	}
-
 	solutions := []string{}
 	for _, v := range outputPaths {
 		cmd, err := exec.Command("cat", v).Output()
@@ -50,22 +46,32 @@ func main() {
 		solutions = append(solutions, s)
 	}
 
-	if len(solutions) != len(inputResult) {
-		panic("[ERROR] solutions and results don't have the same length.")
-	}
-
-	passedAll := true
+	inputResult := []string{}
+	failed := []string{}
 	for i, v := range inputPaths {
-		if solutions[i] == inputResult[i] {
-			continue
-		}
+		fmt.Printf("Running %s\n", v)
+		inputResult = append(inputResult, run(v))
+		result := run(v)
+		if result != solutions[i] {
+			fmt.Printf("\t[FAILED] %s, expected: %s, got: %s\n", v, solutions[i], result)
+			failed = append(failed, v)
+		} else {
+			if i != len(inputPaths)-1 {
+				fmt.Print("\033[G\033[K\033[A") // move cursor up left
+			} else {
+				fmt.Println()
+			}
 
-		log.Printf("[FAILED] case: %s, expected: %s, got: %s\n", v, solutions[i], inputResult[i])
-		passedAll = false
+		}
 	}
 
-	if passedAll {
+	if len(failed) == 0 {
 		log.Printf("[SUCCESS] ran %d test cases.\n", len(inputResult))
+	} else {
+		log.Printf("[FAILED] %d case(s):", len(failed))
+		for _, v := range failed {
+			fmt.Printf("\t%s\n", v)
+		}
 	}
 
 	cleanup()
