@@ -29,47 +29,39 @@ public class ArrayMatch {
         // n is odd: n 
         if (a.length % 2 != 0) {
             for (int i = 0; i < a.length; i++) {
-                if (a[i] != b[i]) return false;
+                if (a[i] != b[i]) return false; // n, 1 if a.length = 1
             }
             return true;
         }
 
-        // split arrays: 2n
-        PairArray aSplit = split(a);
+        // split arrays: n
+        PairArray aSplit = split(a); // n/2
         int[] a1 = aSplit.arr1;
         int[] a2 = aSplit.arr2;
 
-        PairArray bSplit = split(b);
+        PairArray bSplit = split(b); // n/2
         int[] b1 = bSplit.arr1;
         int[] b2 = bSplit.arr2;
 
         // get pairs, recursion step: 3T(n/2)
-        boolean a1_b1 = match(a1, b1);
+        boolean a1_b1 = match(a1, b1); // T(n/2)
         if (!a1_b1) {
-            boolean a2_b1 = match(a2, b1);
-            boolean a2_b2 = match(a2, b2);
+            boolean a2_b1 = match(a2, b1); // T(n/2)
+            boolean a2_b2 = match(a2, b2); // T(n/2)
             return a2_b1 == true && a2_b2 == true;
         }
 
         return match(a2, b2) || match(a1, b2);
     }
 
-    static private boolean twoMatch(boolean cond_1, boolean cond_2) {
-        if (!cond_1 || !cond_2) return false;
-        return true;
-    }
-
     static private PairArray split(int[] a) {
-        int size = a.length;
-        int[] a_1 = new int[size/2];
-        int[] a_2 = new int[size/2];
+        int s = a.length / 2;
+        int[] a_1 = new int[s];
+        int[] a_2 = new int[s];
 
-        for (int i = 0; i < size/2; i++) {
+        for (int i = 0; i < s; i++) {
             a_1[i] = a[i];
-        }
-
-        for (int i = size/2; i < size; i++) {
-            a_2[i-size/2] = a[i];
+            a_2[i] = a[i + s];
         }
 
         return new PairArray(a_1, a_2);
