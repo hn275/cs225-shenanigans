@@ -7,13 +7,21 @@
 /* 
 Algorithm analysis goes here.
 
+Piecewise function
 T(n) = 1 if n = 1
 T(n) = n if n & 2 != 0
 T(n) = 3T(n/2) + cn otherwise
 
-... math stuff
+if match(A1, B1):
+    if match(A2, B2): true
+    else match(A1, B2)
+else:
+    if match(A2, B1): match(A2, B2)
+    else false
 
-T(n) is O(3^(logn)) <= O(n^2)
+... math stuff, I've attached a PDF with tree and analysis
+
+T(n) is O(n^(log3)) <= O(n^2)
 */
 
 
