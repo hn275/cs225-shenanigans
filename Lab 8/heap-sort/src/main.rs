@@ -1,5 +1,5 @@
 fn main() {
-    let mut arr: Vec<i32> = vec![99, 19, 9, 7, 11, 3, 3, 2, 2, 2, 1];
+    let mut arr: Vec<i32> = vec![99, 19, 9, 7, 11, 3, 3, 2, 2, 1];
     println!("Before sort {arr:?}");
 
     heap_sort(&mut arr);
@@ -10,29 +10,32 @@ fn main() {
 fn heap_sort(arr: &mut Vec<i32>) {
     let mut end_index = arr.len() - 1;
 
+    swap(arr, 0, end_index);
+    end_index -= 1;
+    maxify_heap(arr, 0, end_index);
     loop {
         swap(arr, 0, end_index);
         end_index -= 1;
         maxify_heap(arr, 0, end_index);
-        if end_index == 0 {
+        if end_index == 1 {
             break;
         }
     }
 }
 
 fn maxify_heap(arr: &mut Vec<i32>, start_idx: usize, end_idx: usize) {
-    let left_index = 2 * start_idx;
-    let right_index = 2 * start_idx + 1;
+    let left_index = 2 * start_idx + 1;
+    let right_index = 2 * start_idx + 2;
 
     let mut largest_index: usize;
 
-    if left_index <= end_idx && arr[left_index] > arr[start_idx] {
+    if left_index < end_idx && arr[left_index] > arr[start_idx] {
         largest_index = left_index;
     } else {
         largest_index = start_idx;
     }
 
-    if right_index <= end_idx && arr[right_index] > arr[largest_index] {
+    if right_index < end_idx && arr[right_index] > arr[largest_index] {
         largest_index = right_index;
     }
 
