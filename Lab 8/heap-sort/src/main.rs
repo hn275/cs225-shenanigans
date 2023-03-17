@@ -46,7 +46,7 @@ fn maxify_heap(arr: &mut Vec<i32>, start_idx: usize, end_idx: usize) {
 }
 
 fn swap(arr: &mut Vec<i32>, idx1: usize, idx2: usize) {
-    let temp = arr[idx1];
+    let buf = arr[idx1];
     arr[idx1] = arr[idx2];
-    arr[idx2] = temp;
+    arr[idx2] = buf;
 }
