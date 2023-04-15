@@ -16,5 +16,5 @@ test() {
 
 
 # javac WayFinder.java && java WayFinder ./TestCases/input/input00.txt && rm ./WayFinder.class
-javac WayFinder.java && run && test && rm ./*.class run.txt
+javac -Xdiags:verbose WayFinder.java && run && test && rm ./*.class run.txt
 
