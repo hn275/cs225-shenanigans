@@ -1,0 +1,22 @@
+Reading input values from ./TestCases/input/input00.txt.
+8
+Reading input values from ./TestCases/input/input01.txt.
+IMPOSSIBLE
+Reading input values from ./TestCases/input/input02.txt.
+29
+Reading input values from ./TestCases/input/input03.txt.
+IMPOSSIBLE
+Reading input values from ./TestCases/input/input04.txt.
+8
+Reading input values from ./TestCases/input/input05.txt.
+3
+Reading input values from ./TestCases/input/input06.txt.
+7
+Reading input values from ./TestCases/input/input07.txt.
+15
+Reading input values from ./TestCases/input/input08.txt.
+46
+Reading input values from ./TestCases/input/input09.txt.
+67
+Reading input values from ./TestCases/input/input10.txt.
+301

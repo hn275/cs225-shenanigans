@@ -12,19 +12,19 @@ public class WayFinder {
 	static private class Point {
 		int x;
 		int y;
-		int dist;
+		int distance;
 
-		Point(int x, int y, int dist) {
+		private Point(int x, int y, int distance) {
 			this.x = x;
 			this.y = y;
-			this.dist = dist;
+			this.distance = distance;
 		}
 
 		private Point move(Point loc) {
 			return new Point(
 				this.x + loc.x, 
 				this.y + loc.y, 
-				this.dist + loc.dist
+				this.distance + loc.distance
 			);
 		}
 
@@ -41,12 +41,18 @@ public class WayFinder {
 		}
 	}
 
+	static private class Direction extends Point {
+		private Direction(int x, int y) {
+			super(x, y, 1);
+		}
+	}
+
 	static int shortestPath(char[][] map){
 		// Locating origin
 		Point origin = new Point(-1, -1, 0);
 
+		boolean found = false;
 		for (int y = 0; y < map.length; ++y) {
-			boolean found = false;
 			for (int x = 0; x < map[y].length; ++x) {
 			if (map[y][x] == 'A') {
 					origin.update(x, y);
@@ -76,27 +82,24 @@ public class WayFinder {
 		queue.offer(origin);
 		seen[origin.y][origin.x] = true;
 
-
 		while (!queue.isEmpty()) {
 			Point currentNode = queue.poll();
 
 			for (Point direction : DIRECTIONS) {
-				Point nextNode = currentNode.move(direction);
+				Point node = currentNode.move(direction);
 
-				if (nextNode.outOfBound(size)) continue;
+				if (node.outOfBound(size)) continue;
 
-				boolean pathBlocked = map[nextNode.y][nextNode.x] == '#';
-				if (seen[nextNode.y][nextNode.x] || pathBlocked) continue;
+				boolean pathBlocked = map[node.y][node.x] == '#';
+				if (seen[node.y][node.x] || pathBlocked) continue;
 
-				queue.offer(nextNode);
-				seen[nextNode.y][nextNode.x] = true;
+				queue.offer(node);
+				seen[node.y][node.x] = true;
 
-				if (map[nextNode.y][nextNode.x] == 'B') {
-					return nextNode.dist;
-				}
+				if (map[node.y][node.x] == 'B') return node.distance;
 			}
-
 		}
+
 		return Integer.MAX_VALUE;
 	}
 
